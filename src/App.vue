@@ -1,27 +1,26 @@
 <script setup lang="ts">
-import type { Pokemon } from 'env';
-import getPokemonOptions from './api/getPokemonOptions';
-import { ref } from 'vue';
-import PokemonOptions from './components/Options.vue';
-import PokemonPicture from './components/PokemonPicture.vue';
+import type { Pokemon } from 'env'
+import getPokemonOptions from './api/getPokemonOptions'
+import { ref } from 'vue'
+import PokemonOptions from './components/Options.vue'
+import PokemonPicture from './components/PokemonPicture.vue'
 
-  const pokemonArr = ref<Pokemon[]>([])
-  const pokemon = ref<Pokemon>()
+const pokemonArr = ref<Pokemon[]>([])
+const pokemon = ref<Pokemon>()
 
-  const mixPokemonArray =async()=>{
-    pokemonArr.value = await getPokemonOptions()
-    const randomInt = Math.floor(Math.random() * 4)
-    pokemon.value = pokemonArr.value[randomInt]
-    console.log(pokemon.value)
-    console.log(pokemonArr.value)
-  }
+const mixPokemonArray = async () => {
+  pokemonArr.value = await getPokemonOptions()
+  const randomInt = Math.floor(Math.random() * 4)
+  pokemon.value = pokemonArr.value[randomInt]
+  console.log(pokemon.value)
+  console.log(pokemonArr.value)
+}
 mixPokemonArray()
 </script>
 
 <template>
-  <PokemonOptions :pokemons="pokemonArr"/>
-
-  <div class="flex justify-center mt-14" v-for="pokemon in pokemonArr">
-
+  <div class="m-12">
+    <PokemonPicture v-if="pokemon" :pokemon-id="pokemon.id" />
+    <PokemonOptions :pokemons="pokemonArr" />
   </div>
 </template>

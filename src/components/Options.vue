@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center mt-14 space-y-10">
-    <li class="text-3xl" v-for="pokemon in pokemons":key="pokemon.id">
+    <li class="text-3xl" v-for="pokemon in pokemons" :key="pokemon.id">
       {{ pokemon.name }}
     </li>
   </div>
@@ -10,6 +10,6 @@
 import type { Pokemon } from 'env'
 
 defineProps<{
-    pokemons: Pokemon[]
+  pokemons: Pokemon[]
 }>()
 </script>
