@@ -6,9 +6,33 @@ const getPokemons = (): any => {
   return pokemonArr.map((_, index) => index + 1)
 }
 
-const getPokemonOption = () => {
-  const pokemons = getPokemons()
+const pokemonName = async (pokemons: number[]): Promise<Pokemon[]> => {
+  if (pokemons.length != 4) throw 'Error'
+  const [a, b, c, d] = pokemons
+
+  const promiseArr = [
+    pokemonApi.get(`/${a}`),
+    pokemonApi.get(`/${b}`),
+    pokemonApi.get(`/${c}`),
+    pokemonApi.get(`/${d}`)
+  ]
+
+  const [{ data: p1 }, { data: p2 }, { data: p3 }, { data: p4 }] = await Promise.all(promiseArr)
+
+  return [
+    { name: p1.name, id: p1.id },
+    { name: p2.name, id: p2.id },
+    { name: p3.name, id: p3.id },
+    { name: p4.name, id: p4.id }
+  ]
+}
+
+const getPokemonOption = async () => {
+  const mixedpokemons = getPokemons().sort(() => Math.random() - 0.5)
+  console.log(mixedpokemons)
+  const pokemons = await pokemonName(mixedpokemons.splice(0, 4))
   console.log(pokemons)
+  return pokemons
 }
 
 export default getPokemonOption
