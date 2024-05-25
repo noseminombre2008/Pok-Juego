@@ -30,16 +30,16 @@ const checkAnswer = (selectedId: number) => {
   } else {
     streack.value = 0
     const motivationalMassges = [
-    `Tu mamá no te quiere, eso es un ${pokemon.value.name}`,
-    `Eres una come mrd, eso es un ${pokemon.value.name}`,
-    `Gafo, tu novia quedo embrazada de otro por no saber que era una ${pokemon.value.name}`
+      `Tu mamá no te quiere, eso es un ${pokemon.value.name}`,
+      `Eres una come mrd, eso es un ${pokemon.value.name}`,
+      `Gafo, tu novia quedo embrazada de otro por no saber que era una ${pokemon.value.name}`
     ]
     const randomInt = Math.floor(Math.random() * motivationalMassges.length)
-    message.value = motivationalMassges[randomInt] 
+    message.value = motivationalMassges[randomInt]
   }
 }
 
-const newGame =()=>{
+const newGame = () => {
   showPokemon.value = false
   showAnswer.value = false
   pokemonArr.value = []
@@ -54,14 +54,22 @@ mixPokemonArray()
 <template>
   <div class="m-12">
     <PokemonPicture :show-pokemon="showPokemon" v-if="pokemon" :pokemon-id="pokemon.id" />
-    <div class="flex justify-center text-4xl font-bold mt-12"> 
+    <div class="flex justify-center text-4xl font-bold mt-12">
       <p>{{ streack }}</p>
-      <p class="text-blue-400" v-if="streack == 10 ">Cuiden a su novia, este si le sabe</p>
+      <p class="text-blue-400" v-if="streack == 10">Cuiden a su novia, este si le sabe</p>
     </div>
-    <PokemonOptions @selection-pokemon="checkAnswer" :pokemons="pokemonArr" />
+
+    <PokemonOptions 
+    :pokemon1="pokemon"
+    :show-pokemon="showPokemon" 
+    :show-answer="showAnswer" 
+    @selection-pokemon="checkAnswer" 
+    :pokemons="pokemonArr" />
   </div>
+
+
   <div v-if="showAnswer" class="flex flex-col text-center space-y-6">
     <p class="text-3xl font-bold">{{ message }}</p>
-    <butoon class="border-4 p-2 rounded-2xl" @click="newGame">Nuevo Juego</butoon> 
+    <butoon class="border-4 p-2 rounded-2xl" @click="newGame">Nuevo Juego</butoon>
   </div>
 </template>
